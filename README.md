@@ -3,22 +3,21 @@ Quick Notes On Java Multithreading
 
 ## Index
 1. Basic Concepts
-2. Mutex vs Semaphore
-3. Monitor
-4. Multithreading in Java
-5. Executor Framework
+2. Few concepts of Operating System
+2. Mutex, Semaphore, Monitor
+3. Executor Framework in Java
 6. Thread Pool
 7. Thread Local
 
 ## Basic Concepts
-1. Program: Program is a set of instruction that resides in secondary memory.
-2. Process: Process is a program in execution.
-3. Thread: Thread is a basic unit of execution in a process.
+1. **Program**: Program is a set of instruction that resides in secondary memory.
+2. **Process**: Process is a program in execution.
+3. **Thread**: Thread is a basic unit of execution in a process.
 
-Threads shares -> code section, data section, files, signals, etc.
-Threads have its own-> register sets, stack, program counter, etc.
+**Threads shares** -> code section, data section, files, signals, etc.  
+**Threads have its own**-> register sets, stack, program counter, etc.
 
-Benefits of Threads:
+**Benefits of Threads**:
 1. Higher throughput (no. of process executed / time)
 2. Responsive application.
 3. Effective utilization of memory.
@@ -27,28 +26,28 @@ Benefits of Threads:
 
 Concurrency vs Parallelism
 
-Concurrency ->  Concurrency is the ability to run multiple processes in overlapping timer periods. 
-	Ex: Single Core Processor. It can still run your multiple application even when it has a single processor.
-Parallelism-> Parallelismthe ability to run multiple processes at the same time.
-	Ex: Multi-core processor
+**Concurrency** ->  Concurrency is the ability to run multiple processes in overlapping timer periods.    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Ex: Single Core Processor. It can still run your multiple application even when it has a single processor.  
+**Parallelism**-> Parallelismthe ability to run multiple processes at the same time.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Ex: Multi-core processor
 	
-Process Synchronization
-- If two threads are executing a code that has shared variables, then the output of the thread should have to be consistence.
+**Process Synchronization**
+- If two threads are executing a code that has shared variables, then the output of the program should have to be consistence.
 - If your program is not synchronized, then it leads to inconsistency, which should be avoided at all cost.
 
-Race condition
+**Race condition**
  - When the output of the process depends on the order of execution
 
-  task t1    |  task t2		| task t3
-  -----------|--------------|-----------
-  Read(x) 	 |  x = x+ 10   | Write(x)
-             |  Write(x)	|
+| task t1 | task t2   | task t3  |
+|---------|-----------|----------|
+| Read(x) | x = x+ 10 | Write(x) |
+|         | Write(x)  |          |
 			 
-  - here x is a global variable
-  - t1, t2 and t3 -> all are being executed at the same time.
-  - In this case, the final value of x depends on the order of execution of t1, t2 and t3.
+  - here *x* is a global variable
+  - *t1, t2 and t3* -> all are being executed at the same time.
+  - In this case, the final value of *x* depends on the order of execution of *t1, t2 and t3*.
   
-Critical Section: Critical Section is the part of the program that consists of shared variables/resources.
+*Critical Section*: Critical Section is the part of the program that consists of shared variables/resources.
 
 Condition for Synchronization: 
 1. Mutual Exclusion -> At a time, only a single thread should be executing inside the critical section.
