@@ -47,72 +47,72 @@ Concurrency vs Parallelism
   - *t1, t2 and t3* -> all are being executed at the same time.
   - In this case, the final value of *x* depends on the order of execution of *t1, t2 and t3*.
   
-*Critical Section*: Critical Section is the part of the program that consists of shared variables/resources.
+**Critical Section**: Critical Section is the part of the program that consists of shared variables/resources.
 
-Condition for Synchronization: 
-1. Mutual Exclusion -> At a time, only a single thread should be executing inside the critical section.
-2. Progress -> If a process/thread wants to enter the critical section and critical section is free/available, then it should be 
-			   able to enter inside the Critical section.
-			   The decision to enter the critical section should be taken by those who are waiting outside.
-3. Bounded Wait -> There should be a bound on the number of times a process is entering the critical section.
+**Condition for Synchronization**: 
+1. **Mutual Exclusion** -> At a time, only a single thread should be executing inside the critical section.
+2. **Progress** -> If a process/thread wants to enter the critical section and critical section is free/available,--
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then it should be able to enter inside the Critical section.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- The decision to enter the critical section should be taken by those who are waiting outside.
+3. **Bounded Wait** -> There should be a bound on the number of times a process is entering the critical section.
 
 
-* If no bouned wait -> then that process might starve
-* If no progress ->  then deadlock will occur. 
+* If *no bouned wait* -> then that process might *starve*
+* If *no progress* ->  then *deadlock* will occur. 
 
 Checkout Peterson's Critical Section Algorithm for more info.
 
 ## Mutex, Semaphore, Monitor
 - These are like a tool to achieve synchronization in a program.
 
-Mutex
-- Mutual Exclusion
-- Allow only a single thread to enter inside the critical section.
+**Mutex**
+- **Mut**ual **Ex**clusion
+- Allow only a **single thread** to enter inside the critical section.
 - If a thread has acquired the lock, all other threads trying to acquire the lock will block until the lock is released. 
 - Example: A one-way road. At a time, only one can vehicle can pass use it. Multiple vehicles can not pass through it at once. 
 
-Semaphore
-- Unlike mutex, it allows a certain number of threads to enter the critical section.
+**Semaphore**
+- Unlike mutex, it allows **a certain number of threads** to enter the critical section.
 - It can be used for signalling among thread.
 - Example: Say a 2-way road. At a time, 2 vehicles can pass through it simultaneously.
 
-Mutex vs Semaphore
+**Mutex vs Semaphore**
 - Mutex belongs to a thread, but semaphore does not belong to a thread.
-- Binary Semaphore =!  Mutex
-   - Mutex is locked an unlocked by the same thread.
+- Binary Semaphore is not exactly similar to Mutex
+   - Mutex is locked/unlocked by the same thread.
    - Semaphore, even if it's binary, can be locked/unclocked by different threads.
    
-Monitor
+**Monitor**
  - In simple terms : mutex + conditional variable
- - Conditional variables are a mechanism to wait/suspend a thread until notified by other thread that some condition is true now. check (https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/locks/Condition.html for more details)
- - Why conditional variables. Mutex is not enough?
-    - If we don't use conditional variables then, our CPU will spend a lot of time checking some condition is true or not, which will waste a lot of CPU cycles, also known as spin wait. Therefore, it helps to avoid spin-wait to some extent.
+ - Conditional variables are a mechanism to wait/suspend a thread until notified by other thread that some condition is true now. Checkout the [link] (https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/locks/Condition.html) for more details.
+ - Why conditional variables. Is mutex not enough?
+    - If we don't use conditional variables then, our CPU will spend a lot of time checking some condition is true or not, which will waste a lot of CPU cycles, also known as **spin wait**. Therefore, it helps to avoid spin-wait to some extent.
 
-Java Monitor
+**Java Monitor**
  - In Java, every object act as a monitor. 
  - Every object has wait() and signal() function to notify other threads. 
  - The mutex is hidden but to lock the mutex implicitly, a synchronized keyword is used.
- - To learn more: http://www.csc.villanova.edu/~mdamian/threads/javamonitors.html
+ - To learn more:[link](http://www.csc.villanova.edu/~mdamian/threads/javamonitors.html)
  
-Inter-thread communication
-- wait() - Used to tell the calling thread to go sleep and give up the locks until someone calls notify.
-- notify() - Used to wake up a single thread that is in the wait state.
-- notifyAll() - Used to wake up all the threads that are in the wait state.
+**Inter-thread communication**
+- **wait()** - Used to tell the calling thread to go sleep and give up the locks until someone calls notify.
+- **notify()** - Used to wake up a single thread that is in the wait state.
+- **notifyAll()** - Used to wake up all the threads that are in the wait state.
 	
 
 ## Executor Framework in Java
 - If you are working on some large project where there are many threads, then its difficult to manage and maintain them all.
-- Executors are used to manage and maintain threads.
+- Executors are used to **manage and maintain threads**.
 - They are based on the producer-consumer pattern.
 - The task that is produced is consumed by the threads managed by Executors.
 
-- Three interfaces to manage thread
+**Three interfaces to manage thread**
 1. Executor Interface.
 2. ExecutorService Interface
 3. ScheduledExecutorService
 
-ThreadPool
-- consist of multiple worker threads.
+## ThreadPool
+- consist of **multiple worker threads**.
 - creates a limited number of thread.
 - Re-use worker threads whenever they are available instead of creating new threads.
 
@@ -144,12 +144,12 @@ Example of Executors using thread pools
         System.out.println("program terminated");
 		
 
-Executor Lifecycle
+**Executor Lifecycle**
 1. Running
 2. Shutting Down
 3. Terminated
 
-Thread Local
+## Thread Local
 - Allow us to store/fetch data specific to a thread.
 - But, be careful, when using them in thread pools as they might mess up the things.
 
