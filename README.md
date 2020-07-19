@@ -177,4 +177,5 @@ ThreadLocal<Integer> count = ThreadLocal.withInitial(() -> 0);
  }
 ````
 
-## Note : This list is neither exhaustive nor complete. These are my understanding and might be incorrect. Feel free to correct and add more to it.
+### Note : This list is neither exhaustive nor complete. These are my understanding and might be incorrect. 
+Feel free to correct and add more to it. :smile:
