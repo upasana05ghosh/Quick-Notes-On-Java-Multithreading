@@ -51,7 +51,7 @@ Concurrency vs Parallelism
 
 **Condition for Synchronization**: 
 1. **Mutual Exclusion** -> At a time, only a single thread should be executing inside the critical section.
-2. **Progress** -> If a process/thread wants to enter the critical section and critical section is free/available,--
+2. **Progress** -> If a process/thread wants to enter the critical section and critical section is free/available,
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then it should be able to enter inside the Critical section.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- The decision to enter the critical section should be taken by those who are waiting outside.
 3. **Bounded Wait** -> There should be a bound on the number of times a process is entering the critical section.
@@ -84,7 +84,7 @@ Checkout Peterson's Critical Section Algorithm for more info.
    
 **Monitor**
  - In simple terms : mutex + conditional variable
- - Conditional variables are a mechanism to wait/suspend a thread until notified by other thread that some condition is true now. Checkout the [link] (https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/locks/Condition.html) for more details.
+ - Conditional variables are a mechanism to wait/suspend a thread until notified by other thread that some condition is true now. Checkout the [link](https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/locks/Condition.html) for more details.
  - Why conditional variables. Is mutex not enough?
     - If we don't use conditional variables then, our CPU will spend a lot of time checking some condition is true or not, which will waste a lot of CPU cycles, also known as **spin wait**. Therefore, it helps to avoid spin-wait to some extent.
 
@@ -118,30 +118,34 @@ Checkout Peterson's Critical Section Algorithm for more info.
 
 Example of Executors using thread pools
 
-		//creating a thread pool of 5 worker threads using ExecutorService
-		ExecutorService executorService = Executors.newFixedThreadPool(5);
+````
+//creating a thread pool of 5 worker threads using ExecutorService
+ExecutorService executorService = Executors.newFixedThreadPool(5);
 
-		//Calling the task 10 times. Since, we have only 5 worker threads, 
-		//so these 5 will be used only, once they are available
-        for (int i = 0; i< 10; i++ ){
-        executorService.execute(() -> {
-            System.out.println("Inside executor" + Thread.currentThread().getName());
-        });
-        }
+//Calling the task 10 times. Since, we have only 5 worker threads, 
+//so these 5 will be used repeatedly, once they are available
+for (int i = 0; i< 10; i++ ){
+   executorService.execute(() -> {
+       System.out.println("Inside executor" + Thread.currentThread().getName());
+   });
+}
 
-		// to free up system resources and to allow graceful application shutdown. 
-		//Submitted tasks are still executed, but no new tasks will be accepted.
-        executorService.shutdown();
-		
-		
-        while (!executorService.isTerminated()) {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("program terminated");
+// to free up system resources and to allow graceful application shutdown. 
+//Submitted tasks are still executed, but no new tasks will be accepted.
+ executorService.shutdown();
+
+//wait till all task are terminated
+while (!executorService.isTerminated()) {
+    try {
+         TimeUnit.SECONDS.sleep(1);
+    } catch (InterruptedException e) {
+          e.printStackTrace();
+    }
+    }
+//program terminated    
+System.out.println("program terminated");
+
+`````
 		
 
 **Executor Lifecycle**
@@ -153,19 +157,24 @@ Example of Executors using thread pools
 - Allow us to store/fetch data specific to a thread.
 - But, be careful, when using them in thread pools as they might mess up the things.
 
-
+```
 int count = 0;
 void sum(int n) {
-	count  = count + n;
-	return count;
+    count  = count + n;
+    return count;
 }
+
+```
 
 This code is not thread-safe. Since the count is a global variable and will not hold the initial value for all the threads.
 Instead, we can use thread-local to save the value of the count variable
 
-    ThreadLocal<Integer> count = ThreadLocal.withInitial(() -> 0);
+```
+ThreadLocal<Integer> count = ThreadLocal.withInitial(() -> 0);
 
-    void sum(int n) {
-        counter.set(counter.get() + n);
-    }
+ void sum(int n) {
+   counter.set(counter.get() + n);
+ }
+````
 
+## Note : This list is neither exhaustive nor complete. These are my understanding and might be incorrect. Feel free to correct and add more to it.
